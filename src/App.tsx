@@ -227,17 +227,19 @@ export default function App() {
   };
 
   return (
-    <div className="max-w-md mx-auto h-screen bg-ling-bg overflow-hidden relative shadow-2xl border-x border-ling-ink/5">
-      <AnimatePresence mode="wait">
-        {renderScreen()}
-      </AnimatePresence>
+    <div className="w-full max-w-md mx-auto h-screen bg-ling-bg overflow-hidden relative flex flex-col pt-safe shadow-2xl md:border-x md:border-ling-ink/5">
+      <div className="flex-1 overflow-hidden relative">
+        <AnimatePresence mode="wait">
+          {renderScreen()}
+        </AnimatePresence>
+      </div>
       
       {screen !== 'splash' && (
-        <nav className="absolute bottom-0 left-0 right-0 bg-white border-t border-ling-ink/10 h-16 flex items-center justify-around px-4 z-50">
-          <NavButton active={screen === 'home'} icon={<Home size={20} />} label="首页" onClick={() => setScreen('home')} />
-          <NavButton active={screen === 'notes'} icon={<Edit3 size={20} />} label="笔记" onClick={() => setScreen('notes')} />
-          <NavButton active={screen === 'checkin'} icon={<Calendar size={20} />} label="打卡" onClick={() => setScreen('checkin')} />
-          <NavButton active={screen === 'profile'} icon={<User size={20} />} label="我的" onClick={() => setScreen('profile')} />
+        <nav className="bg-white/80 backdrop-blur-md border-t border-ling-ink/10 pb-safe flex items-center justify-around px-4 z-50 h-[calc(4rem+env(safe-area-inset-bottom))]">
+          <NavButton active={screen === 'home'} icon={<Home size={22} />} label="首页" onClick={() => setScreen('home')} />
+          <NavButton active={screen === 'notes'} icon={<Edit3 size={22} />} label="笔记" onClick={() => setScreen('notes')} />
+          <NavButton active={screen === 'checkin'} icon={<Calendar size={22} />} label="打卡" onClick={() => setScreen('checkin')} />
+          <NavButton active={screen === 'profile'} icon={<User size={22} />} label="我的" onClick={() => setScreen('profile')} />
         </nav>
       )}
     </div>
@@ -248,10 +250,12 @@ function NavButton({ active, icon, label, onClick }: { active: boolean, icon: Re
   return (
     <button 
       onClick={onClick}
-      className={`flex flex-col items-center gap-1 transition-colors ${active ? 'text-ling-accent' : 'text-ling-ink/40'}`}
+      className={`flex flex-col items-center gap-1 transition-all duration-300 ${active ? 'text-ling-accent scale-110' : 'text-ling-ink/40'}`}
     >
-      {icon}
-      <span className="text-[10px] font-medium">{label}</span>
+      <div className={`p-1 rounded-lg transition-colors ${active ? 'bg-ling-accent/10' : ''}`}>
+        {icon}
+      </div>
+      <span className={`text-[10px] font-bold tracking-tighter ${active ? 'opacity-100' : 'opacity-60'}`}>{label}</span>
     </button>
   );
 }
@@ -325,9 +329,9 @@ function HomeScreen({ onSelectCategory, onNavigate, dailySymbol, onViewDailyDeta
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="h-full pt-12 pb-20 px-6 overflow-y-auto"
+      className="h-full pt-6 pb-20 px-6 overflow-y-auto no-scrollbar"
     >
-      <header className="flex items-center justify-between mb-10">
+      <header className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-2">
           <LingShuLogo size={32} className="text-ling-accent" />
           <h2 className="text-xl font-serif font-bold">灵枢</h2>
@@ -444,9 +448,9 @@ function BrowsingScreen({ category, onBack, onSelectSymbol, saveNote, userData }
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
-      className="h-full pt-12 pb-20 flex flex-col"
+      className="h-full pt-6 pb-20 flex flex-col"
     >
-      <header className="flex items-center gap-4 px-6 mb-6">
+      <header className="flex items-center gap-4 px-6 mb-4">
         <button onClick={activeSectionId ? () => setActiveSectionId(null) : onBack} className="w-10 h-10 rounded-full bg-white border border-ling-ink/10 flex items-center justify-center shrink-0">
           <ChevronLeft size={20} />
         </button>
@@ -606,9 +610,9 @@ function DetailScreen({ symbol, onBack, userData, toggleFavorite, saveNote }: { 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className="h-full pt-12 pb-20 px-6 overflow-y-auto"
+      className="h-full pt-6 pb-20 px-6 overflow-y-auto no-scrollbar"
     >
-      <header className="flex items-center justify-between mb-8">
+      <header className="flex items-center justify-between mb-6">
         <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ling-ink/10 flex items-center justify-center">
           <ChevronLeft size={20} />
         </button>
@@ -730,7 +734,7 @@ function NotesOverviewScreen({ onBack, onSelectSymbol, userData }: { onBack: () 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-full pt-12 pb-20 px-6 overflow-y-auto"
+      className="h-full pt-6 pb-20 px-6 overflow-y-auto no-scrollbar"
     >
       <header className="flex items-center gap-4 mb-8">
         <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ling-ink/10 flex items-center justify-center">
@@ -803,7 +807,7 @@ function QueryScreen({ onBack, onSelectSymbol }: { onBack: () => void, onSelectS
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-full pt-12 pb-20 px-6 overflow-y-auto"
+      className="h-full pt-6 pb-20 px-6 overflow-y-auto no-scrollbar"
     >
       <header className="flex items-center gap-4 mb-8">
         <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ling-ink/10 flex items-center justify-center">
@@ -871,7 +875,7 @@ function CheckinScreen({ onBack, userData, onCheckIn, toggleTask }: { onBack: ()
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-full pt-12 pb-20 px-6 overflow-y-auto"
+      className="h-full pt-6 pb-20 px-6 overflow-y-auto no-scrollbar"
     >
       <header className="flex items-center gap-4 mb-8">
         <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ling-ink/10 flex items-center justify-center">
@@ -928,7 +932,7 @@ function ProfileScreen({ onBack, userData, onNavigate }: { onBack: () => void, u
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-full pt-12 pb-20 px-6 overflow-y-auto"
+      className="h-full pt-6 pb-20 px-6 overflow-y-auto no-scrollbar"
     >
       <header className="flex items-center gap-4 mb-10">
         <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ling-ink/10 flex items-center justify-center">
@@ -1009,7 +1013,7 @@ function FavoritesScreen({ onBack, onSelectSymbol, userData }: { onBack: () => v
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-full pt-12 pb-20 px-6 overflow-y-auto"
+      className="h-full pt-6 pb-20 px-6 overflow-y-auto no-scrollbar"
     >
       <header className="flex items-center gap-4 mb-8">
         <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ling-ink/10 flex items-center justify-center">
@@ -1057,7 +1061,7 @@ function SettingsScreen({ onBack, userData, onToggleCategory }: { onBack: () => 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="h-full pt-12 pb-20 px-6 overflow-y-auto"
+      className="h-full pt-6 pb-20 px-6 overflow-y-auto no-scrollbar"
     >
       <header className="flex items-center gap-4 mb-8">
         <button onClick={onBack} className="w-10 h-10 rounded-full bg-white border border-ling-ink/10 flex items-center justify-center">

@@ -12,24 +12,34 @@
 
 @layer base {
   body {
-    @apply bg-ling-bg text-ling-ink font-sans;
+    @apply bg-ling-bg text-ling-ink font-sans overflow-hidden;
+    /* Prevent pull-to-refresh and overscroll bounce on mobile */
+    overscroll-behavior: none;
   }
   h1, h2, h3, h4 {
     @apply font-serif;
   }
 }
 
+/* Safe Area Utilities */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+.h-screen-safe {
+  height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+}
+
 /* Custom scrollbar for a cleaner look */
-::-webkit-scrollbar {
-  width: 4px;
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #5C403322;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #5C403344;
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
