@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Noto Serif SC", "Georgia", serif;
+  
+  --color-ling-bg: #FDFDFD;
+  --color-ling-ink: #5C4033;
+  --color-ling-accent: #BDB76B;
+  --color-ling-soft: #E6E6FA;
+}
+
+@layer base {
+  body {
+    @apply bg-ling-bg text-ling-ink font-sans;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
+
+/* Custom scrollbar for a cleaner look */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #5C403322;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5C403344;
+}
